@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 //settings
 const app = express();
 app.set("PORT", 3000);
@@ -8,6 +9,13 @@ const firmaCookie = "Star-trek";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(firmaCookie)); //firmar Cookie
+app.use(
+  session({
+    secret: "Palabra-secreta",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 //routes
 app.get("/", (req, res) => {
@@ -48,6 +56,41 @@ app.get("/get-signed-cookie", (req, res) => {
 app.get("/delete-signed-cookie", (req, res) => {
   res.clearCookie("MySignedCookie");
   res.send("Cookie FIRMADA removida");
+});
+// SESSIONS
+app.get("/session", (req, res) => {
+  if (req.session.counter) {
+    req.session.counter++;
+    res.send(`Visitaste la pagina ${req.session.counter} veces`);
+  } else {
+    req.session.counter = 1;
+    res.send("Bienvenido a la pagina");
+  }
+});
+
+// login
+
+app.get("/login", (req, res) => {
+  const { username, password } = req.query;
+  if (username !== "jacinto" || password !== "lopez123") {
+    return res.status(401).send("Usuario o contraseña incorrectos");
+  }
+  req.session.user = username;
+  //   req.session.admin = false;
+  req.session.role = "estudiante";
+  res.send("Login exitoso");
+});
+// middleware auth
+const auth = (req, res, next) => {
+  if (req.session?.role === "admin") {
+    next();
+  } else {
+    res.status(401).send("No estas autorizado");
+  }
+};
+
+app.get("/privado", auth, (req, res) => {
+  res.send(`bienvenido ${req.session.user}`);
 });
 
 //listeners
