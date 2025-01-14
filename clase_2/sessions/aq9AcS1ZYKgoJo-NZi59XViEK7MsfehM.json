@@ -1,0 +1,10 @@
+{
+  "cookie": {
+    "originalMaxAge": null,
+    "expires": null,
+    "httpOnly": true,
+    "path": "/"
+  },
+  "user": "dani",
+  "__lastAccess": 1736813724374
+}

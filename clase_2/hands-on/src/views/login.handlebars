@@ -1,0 +1,19 @@
+<h1>{{title}}</h1>
+
+<form action="/api/sessions/login" method="post">
+  <div>
+    <div>
+      <label for="email">Email:</label>
+      <br />
+      <input type="email" id="email" name="email" placeholder="example@mail.com" />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <br />
+      <input type="password" id="password" name="password" placeholder="12345" />
+    </div>
+    <br />
+    <button type="submit">Ingresar</button>
+  </div>
+</form>
+¿No tienes cuenta?<a href="/register">Registrar</a>

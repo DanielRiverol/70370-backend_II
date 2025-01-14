@@ -1,0 +1,44 @@
+<h1>{{title}}</h1>
+
+<form action="/api/sessions/register" method="post">
+  <div>
+    <div>
+      <label for="first_name">First Name:</label>
+      <br />
+      <input type="text" id="first_name" name="first_name" placeholder="Juan" />
+    </div>
+    <div>
+      <label for="last_name">Last Name:</label>
+      <br />
+      <input type="text" id="last_name" name="last_name" placeholder="Perez" />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <br />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="example@mail.com"
+      />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="12345"
+      />
+    </div>
+    {{!-- <div>
+      <label for="age">Age:</label>
+      <br />
+      <input type="number" id="age" name="age" placeholder="1" min="1" />
+    </div> --}}
+    <br />
+    <button type="submit">Registrar</button>
+  </div>
+</form>
+¿Ya tienes cuenta?<a href="/ingresar">Ingresar</a>
