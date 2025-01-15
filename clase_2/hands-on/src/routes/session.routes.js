@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     if (userExist) {
       return res.status(400).json({ message: "El correo ya existe" });
     }
-     await userModel.create({
+    await userModel.create({
       first_name,
       last_name,
       email,
@@ -30,18 +30,17 @@ router.post("/login", async (req, res) => {
   try {
     const userExist = await userModel.findOne({ email: email });
     if (userExist) {
-      if(userExist.password === password){
-        req.session.user={
-            first_name: userExist.first_name,
-            last_name: userExist.last_name,
-            email: userExist.email,
-        }
-        res.redirect('/profile')
-      }else{
-        res.status(401).send("{Pass invlido")
+      if (userExist.password === password) {
+        req.session.user = {
+          first_name: userExist.first_name,
+          last_name: userExist.last_name,
+          email: userExist.email,
+        };
+        res.redirect("/profile");
+      } else {
+        res.status(401).send("{Pass inválido");
       }
     }
-    
   } catch (error) {
     res
       .status(500)

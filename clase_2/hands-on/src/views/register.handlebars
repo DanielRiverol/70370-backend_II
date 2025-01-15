@@ -3,12 +3,12 @@
 <form action="/api/sessions/register" method="post">
   <div>
     <div>
-      <label for="first_name">First Name:</label>
+      <label for="first_name">Nombre:</label>
       <br />
       <input type="text" id="first_name" name="first_name" placeholder="Juan" />
     </div>
     <div>
-      <label for="last_name">Last Name:</label>
+      <label for="last_name">Apellido:</label>
       <br />
       <input type="text" id="last_name" name="last_name" placeholder="Perez" />
     </div>
@@ -19,7 +19,7 @@
         type="email"
         id="email"
         name="email"
-        placeholder="example@mail.com"
+        placeholder="juanperez@mail.com"
       />
     </div>
     <div>
@@ -29,16 +29,11 @@
         type="password"
         id="password"
         name="password"
-        placeholder="12345"
+        placeholder="****"
       />
     </div>
-    {{!-- <div>
-      <label for="age">Age:</label>
-      <br />
-      <input type="number" id="age" name="age" placeholder="1" min="1" />
-    </div> --}}
     <br />
-    <button type="submit">Registrar</button>
+    <button type="submit"> Registrar</button>
   </div>
 </form>
-¿Ya tienes cuenta?<a href="/ingresar">Ingresar</a>
+¿Ya tienes cuenta? <a href="/login">Ingresar</a>

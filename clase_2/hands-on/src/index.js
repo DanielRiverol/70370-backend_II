@@ -16,7 +16,7 @@ app.set("views", "./src/views");
 const secret = "miclave1234";
 // const mongodbUri = "mongodb://127.0.0.1:27017/mongo-store";
 const mongodbUri =
-  "mongodb+srv://riverolsdaniel:DybItHw0pPzgCGIL@cluster0.13d8p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://riverolsdaniel:DybItHw0pPzgCGIL@cluster0.13d8p.mongodb.net/curso-backewnd-70370?retryWrites=true&w=majority&appName=Cluster0";
 // connect database
 const connectDb = async (uri) => {
   try {
