@@ -1,5 +1,6 @@
 import { Router } from "express";
 import userModel from "../models/users.model.js";
+import {createHash, isValidPassword} from '../utils.js'
 const router = Router();
 
 router.post("/register", async (req, res) => {
@@ -14,7 +15,7 @@ router.post("/register", async (req, res) => {
       first_name,
       last_name,
       email,
-      password,
+      password : createHash(password),
     });
 
     res.status(201).redirect("/login");
@@ -30,7 +31,9 @@ router.post("/login", async (req, res) => {
   try {
     const userExist = await userModel.findOne({ email: email });
     if (userExist) {
-      if (userExist.password === password) {
+const isValid =  isValidPassword(password,userExist.password)
+
+      if (isValid) {
         req.session.user = {
           first_name: userExist.first_name,
           last_name: userExist.last_name,
@@ -38,7 +41,7 @@ router.post("/login", async (req, res) => {
         };
         res.redirect("/profile");
       } else {
-        res.status(401).send("{Pass inválido");
+        res.status(401).send("Pass inválido");
       }
     }
   } catch (error) {
@@ -47,5 +50,26 @@ router.post("/login", async (req, res) => {
       .json({ message: "Error interno del servidor", err: error.mesagge });
   }
 });
+// recuperar password
+router.post('/recupero', async (req, res)=>{
+  const {email, password}= req.body
+  try {
+    if(!email || !password)return res.status(400).send("campos requirdos")
 
+      const  userFound = await userModel.findOne({email})
+
+      const hashPass= createHash(password)
+      userFound.password = hashPass
+
+      await userFound.save()
+      res.redirect('/login')
+  } catch (error) {
+    
+  }
+})
+// despues
+router.get('/current', (req,res)=>{
+  if(!req.session.user)return res.redirect('/login')
+  res.send("Hola")
+})
 export default router;

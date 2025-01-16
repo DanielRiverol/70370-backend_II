@@ -4,8 +4,8 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
-import userRoutes from './routes/session.routes.js'
-import viewRoutes from './routes/views.routes.js'
+import userRoutes from "./routes/session.routes.js";
+import viewRoutes from "./routes/views.routes.js";
 //settings
 const app = express();
 app.set("PORT", 3000);
@@ -50,8 +50,8 @@ app.get("/", (req, res) => {
   res.render("home", { title: "HOME" });
 });
 
-app.use('/api/sessions', userRoutes)
-app.use('/', viewRoutes)
+app.use("/api/sessions", userRoutes);
+app.use("/", viewRoutes);
 
 //listeners
 app.listen(app.get("PORT"), () => {
