@@ -7,54 +7,55 @@ import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
 
 const router = Router();
-
+// rutas post
 // router.post("/register", async (req, res) => {
 //   const { first_name, last_name, email, password } = req.body;
 
 //   try {
-//     const userExist = await userModel.findOne({ email: email });
+//     const userExist = await userModel.findOne({ email });
 //     if (userExist) {
 //       return res.status(400).json({ message: "El correo ya existe" });
 //     }
-//     await userModel.create({
+//     const newUser = {
 //       first_name,
 //       last_name,
 //       email,
-//       password : createHash(password),
-//     });
+//       password: createHash(password),
+//     };
+//     await userModel.create(newUser);
 
 //     res.status(201).redirect("/login");
 //   } catch (error) {
 //     res
 //       .status(500)
-//       .json({ message: "Error interno del servidor", err: error.mesagge });
+//       .json({ message: "Error interno del servidor", err: error.message });
 //   }
 // });
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-//   try {
-//     const userExist = await userModel.findOne({ email: email });
-//     if (userExist) {
-// const isValid =  isValidPassword(password,userExist.password)
+  try {
+    const userExist = await userModel.findOne({ email });
+    if (userExist) {
+const isValid =  isValidPassword(password,userExist.password)
 
-//       if (isValid) {
-//         req.session.user = {
-//           first_name: userExist.first_name,
-//           last_name: userExist.last_name,
-//           email: userExist.email,
-//         };
-//         res.redirect("/profile");
-//       } else {
-//         res.status(401).send("Pass inválido");
-//       }
-//     }
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json({ message: "Error interno del servidor", err: error.mesagge });
-//   }
-// });
+      if (isValid) {
+        req.session.user = {
+          first_name: userExist.first_name,
+          last_name: userExist.last_name,
+          email: userExist.email,
+        };
+        res.redirect("/profile");
+      } else {
+        res.status(401).send("Pass inválido");
+      }
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error interno del servidor", err: error.mesagge });
+  }
+});
 
 // PARTE 2
 router.post(
@@ -84,6 +85,21 @@ router.post("/recupero", async (req, res) => {
     res.redirect("/login");
   } catch (error) {}
 });
+
+// logout
+router.post('/logout', (req, res)=>{
+  if(req.session.user){
+    req.session.destroy((err)=>{
+      if(!err){
+        res.clearCookie('connect.sid')
+        res.redirect('/login')
+      }else{
+        res.send("error al cerrar la sesion")
+      }
+    })
+  }
+})
+
 // despues
 router.get("/current", (req, res) => {
   if (!req.session.user) return res.redirect("/login");

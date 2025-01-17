@@ -16,8 +16,8 @@ const initializePassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email } = req.body;
         try {
-          const user = await userModel.findOne({ email: username });
-          if (user) {
+          const userFound = await userModel.findOne({ email: username });//email:usernaem = email: email
+          if (userFound) {
             console.log("Usuario ya existe");
             return done(null, false);
           }
@@ -27,11 +27,11 @@ const initializePassport = () => {
             email,
             password: createHash(password),
           };
-          const result = await userModel.create(newUser)
+          const user = await userModel.create(newUser)
 
-          return done(null, result)
+          return done(null, user)
         } catch (error) {
-            return done(`error al crear el usuario ${error}`)
+            return done(`error al crear el usuario ${error}`,false)
         }
       }
     )
@@ -39,7 +39,7 @@ const initializePassport = () => {
 // Aqui realizar el login con las diapos Vamos que vos podes!!!!
 // passport.use()
 
-
+// aca ocurre magia
   passport.serializeUser((user, done)=>{
     done(null, user._id)
   })

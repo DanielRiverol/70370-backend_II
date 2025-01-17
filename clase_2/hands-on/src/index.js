@@ -41,7 +41,7 @@ app.use(
   session({
     store: MongoStore.create({
       mongoUrl: mongodbUri,
-      ttl: 15,
+      ttl: 100,
     }),
     secret,
     resave: false,
@@ -57,8 +57,8 @@ app.get("/", (req, res) => {
   res.render("home", { title: "HOME" });
 });
 
-app.use("/api/sessions", userRoutes);
-app.use("/", viewRoutes);
+app.use("/api/sessions", userRoutes);//v1/api/algo v2/api/algo
+app.use("/", viewRoutes);//SSR
 
 //listeners
 app.listen(app.get("PORT"), () => {
