@@ -31,31 +31,31 @@ const router = Router();
 //       .json({ message: "Error interno del servidor", err: error.message });
 //   }
 // });
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const userExist = await userModel.findOne({ email });
-    if (userExist) {
-const isValid =  isValidPassword(password,userExist.password)
+//   try {
+//     const userExist = await userModel.findOne({ email:email });
+//     if (userExist) {
+// const isValid =  isValidPassword(password,userExist.password)
 
-      if (isValid) {
-        req.session.user = {
-          first_name: userExist.first_name,
-          last_name: userExist.last_name,
-          email: userExist.email,
-        };
-        res.redirect("/profile");
-      } else {
-        res.status(401).send("Pass inválido");
-      }
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error interno del servidor", err: error.mesagge });
-  }
-});
+//       if (isValid) {
+//         req.session.user = {
+//           first_name: userExist.first_name,
+//           last_name: userExist.last_name,
+//           email: userExist.email,
+//         };
+//         res.redirect("/profile");
+//       } else {
+//         res.status(401).send("Pass inválido");
+//       }
+//     }
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error interno del servidor", err: error.mesagge });
+//   }
+// });
 
 // PARTE 2
 router.post(
@@ -70,6 +70,19 @@ router.get("/failregister", (req, res) => {
     .status(400)
     .send({ status: "error", message: "Error al registrar el usuario" });
 });
+router.post(
+  "/login",
+  passport.authenticate("login", { failureRedirect: "faillogin" }),
+  async (req, res) => {
+    res.redirect("/profile");
+  }
+);
+router.get("/faillogin", (req, res) => {
+  res.status(400).send({ status: "error", message: "Error al ingresar" });
+});
+
+// google
+router.get('/auth/google',passport.authenticate('google',{scope:["email", "profile"]}))
 // recuperar password
 router.post("/recupero", async (req, res) => {
   const { email, password } = req.body;
@@ -87,18 +100,27 @@ router.post("/recupero", async (req, res) => {
 });
 
 // logout
-router.post('/logout', (req, res)=>{
-  if(req.session.user){
-    req.session.destroy((err)=>{
-      if(!err){
-        res.clearCookie('connect.sid')
-        res.redirect('/login')
-      }else{
-        res.send("error al cerrar la sesion")
-      }
-    })
-  }
-})
+router.post("/logout", (req, res, next) => {
+  //traidcional
+  // if(req.session.user){
+  //   req.session.destroy((err)=>{
+  //     if(!err){
+  //       res.clearCookie('connect.sid')
+  //       res.redirect('/login')
+  //     }else{
+  //       res.send("error al cerrar la sesion")
+  //     }
+  //   })
+  // }
+
+  // passprot
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
 
 // despues
 router.get("/current", (req, res) => {

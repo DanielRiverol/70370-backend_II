@@ -276,3 +276,17 @@ table[border="1"] td {
 ol.reset, ul.reset {
 	list-style: none;
 }
+.btn {
+  margin: 10px 0;
+  display: block;
+  width: fit-content;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #cccccc;
+  text-decoration: none;
+  color: #333333 !important;
+}
+.btn-google {
+  background-color: #3471db;
+  color: #eeeeee !important;
+}

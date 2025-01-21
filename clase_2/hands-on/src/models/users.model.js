@@ -12,11 +12,11 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true,//atencion
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 
