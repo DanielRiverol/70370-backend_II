@@ -4,8 +4,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import userModel from "../models/users.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 
-const data = '';
-const data1 = '';
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
 const LocalStrategy = local.Strategy;
 
 const initializePassport = () => {
@@ -70,8 +71,8 @@ const initializePassport = () => {
   // GOOGlE register/login
   passport.use('google',
     new GoogleStrategy({
-      clientID: data,
-      clientSecret:data1,
+      clientID: googleClientId,
+      clientSecret:googleClientSecret,
       callbackURL:'http://localhost:3000/auth/google/callback'
     },async(request, accesToken, refreshToken,profile,done)=>{
       try {
