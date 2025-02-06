@@ -1,8 +1,6 @@
 import { Router } from "express";
+import toysController from "../controllers/toys.controller.js";
 const router = Router();
-
-router.get("/", (req, res) => {
-  res.status(200).json({ message: "OK", payload: [] });
-});
-
+router.get("/",toysController.getToysAll);
+// terminar el crud
 export default router;
