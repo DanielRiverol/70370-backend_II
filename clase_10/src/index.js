@@ -1,7 +1,7 @@
 import express from "express";
 import env from "./config/envs.js";
 import testRoutes from './routes/test.routes.js'
-import MongoDBSingleton from "./database/db.js";
+// import MongoDBSingleton from "./database/db.js";
 //settings
 const app = express();
 app.set("PORT", env.port || 4000);
@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 app.use('/test', testRoutes)
 
 //listeners
-MongoDBSingleton.getInstance()
+// MongoDBSingleton.getInstance()
 // MongoDBSingleton.getInstance()
 // MongoDBSingleton.getInstance()
 // MongoDBSingleton.getInstance()
