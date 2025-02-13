@@ -1,6 +1,6 @@
 import express from "express";
 import env from "./config/env.js";
-import connectDB from "./database/db.js";
+// import connectDB from "./database/db.js";
 import contactRouter from "./routes/contacts.router.js";
 
 //settings
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 app.use("/contacts", contactRouter);
 //listeners
-connectDB(env.mongodb_uri);
+// connectDB(env.mongodb_uri);
 app.listen(app.get("PORT"), () => {
   console.log(`Server on port http://localhost:${app.get("PORT")}`);
 });
