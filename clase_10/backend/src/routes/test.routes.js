@@ -8,12 +8,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { name } = req.body;
+  const { nombre } = req.body;
   console.log(name);
 
   users.push(name);
   res.send({ message: "Usuario agregado con exito", users });
 });
+
 
 
 export default router;

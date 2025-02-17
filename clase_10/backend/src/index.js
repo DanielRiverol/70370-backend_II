@@ -12,13 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
   origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501"],//0.0.0.0.0:0
+  
 };
-// app.use(cors(corsOptions))
+app.use(cors())//0.0.0.0.0:0
 //routes
 app.get("/", (req, res) => {
-  res.json({ title: "Home Page" });
+  res.json({ title: "Página Principal" });
 });
-app.use('/test',cors(corsOptions), testRoutes)
+// app.use('/test',cors(corsOptions), testRoutes)
+app.use('/test', testRoutes)
 
 //listeners
 // MongoDBSingleton.getInstance()
