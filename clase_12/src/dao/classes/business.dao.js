@@ -1,7 +1,7 @@
 import BusinessModel from "../models/business.model.js";
 
 export default class Business {
-  getBusinesss = async () => {
+  getBusiness = async () => {
     try {
       const Business = await BusinessModel.find();
       return Business;
